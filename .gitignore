@@ -1,0 +1,14 @@
+# Scratch space — CLAUDE.md: /tmp is always safe to delete, never committed
+tmp/
+
+# Dependencies — none installed yet, see README.md / ARCHITECTURE.md
+node_modules/
+
+# Secrets — CLAUDE.md Security Enforcement Layer: no secrets in commit history
+.env
+.env.*
+!.env.example
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db

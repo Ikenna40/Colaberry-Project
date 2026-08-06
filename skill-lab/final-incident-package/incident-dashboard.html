@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orders Dashboard — Publish Incident</title>
+<style>
+  :root {
+    color-scheme: light;
+    --page:        #f9f9f7;
+    --surface:     #fcfcfb;
+    --text-1:      #0b0b0b;
+    --text-2:      #52514e;
+    --muted:       #898781;
+    --gridline:    #e1e0d9;
+    --border:      rgba(11,11,11,0.10);
+    --good:        #0ca30c;
+    --critical:    #d03b3b;
+    --warning:     #fab219;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --page:        #0d0d0d;
+      --surface:     #1a1a19;
+      --text-1:      #ffffff;
+      --text-2:      #c3c2b7;
+      --muted:       #898781;
+      --gridline:    #2c2c2a;
+      --border:      rgba(255,255,255,0.10);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page:        #0d0d0d;
+    --surface:     #1a1a19;
+    --text-1:      #ffffff;
+    --text-2:      #c3c2b7;
+    --muted:       #898781;
+    --gridline:    #2c2c2a;
+    --border:      rgba(255,255,255,0.10);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--text-1);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.5;
+  }
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 20px 64px;
+  }
+  header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: 22px;
+    margin: 0 0 4px;
+  }
+  .subtitle {
+    color: var(--text-2);
+    font-size: 14px;
+    margin: 0;
+  }
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--critical);
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .status-badge .icon { font-size: 15px; line-height: 1; }
+
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  @media (max-width: 700px) {
+    .tiles { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  }
+  .tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .tile .label {
+    font-size: 12px;
+    color: var(--text-2);
+    margin: 0 0 6px;
+  }
+  .tile .value {
+    font-size: 26px;
+    font-weight: 600;
+    margin: 0;
+    font-variant-numeric: proportional-nums;
+  }
+  .tile .value.critical { color: var(--critical); }
+  .tile .sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin: 4px 0 0;
+  }
+
+  section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 22px;
+    margin-bottom: 16px;
+  }
+  section h2 {
+    font-size: 15px;
+    margin: 0 0 12px;
+    color: var(--text-1);
+  }
+  section p { margin: 0 0 8px; font-size: 14px; color: var(--text-1); }
+  ul.facts { margin: 0; padding-left: 20px; font-size: 14px; }
+  ul.facts li { margin-bottom: 6px; }
+  ul.facts.unknown li { color: var(--text-2); }
+
+  .table-scroll { overflow-x: auto; }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 13px;
+    min-width: 560px;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--gridline);
+    vertical-align: top;
+  }
+  th { color: var(--text-2); font-weight: 600; font-size: 12px; }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
+  .pill.fail { color: var(--critical); border: 1px solid var(--critical); }
+  .pill.pass { color: var(--good); border: 1px solid var(--good); }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 700px) {
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+
+  .decision {
+    border-left: 3px solid var(--critical);
+    padding-left: 14px;
+  }
+
+  dl.meta {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 4px 16px;
+    font-size: 14px;
+    margin: 0;
+  }
+  dl.meta dt { color: var(--text-2); }
+  dl.meta dd { margin: 0; }
+
+  footer {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 24px;
+  }
+  details { font-size: 13px; }
+  details summary { cursor: pointer; color: var(--text-2); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <h1>Orders Revenue Dashboard — Publish Incident</h1>
+      <p class="subtitle">Scheduled publish date: 2026-08-03 &nbsp;·&nbsp; Source: skill-lab/orders.csv &nbsp;·&nbsp; Pipeline: orders_ingest_daily</p>
+    </div>
+    <span class="status-badge"><span class="icon">&#10005;</span> BLOCKED</span>
+  </header>
+
+  <div class="tiles">
+    <div class="tile">
+      <p class="label">Data quality result</p>
+      <p class="value critical">FAIL</p>
+      <p class="sub">4 of 8 checks failed</p>
+    </div>
+    <div class="tile">
+      <p class="label">Rows loaded</p>
+      <p class="value critical">0 / 12</p>
+      <p class="sub">Load step never reached</p>
+    </div>
+    <div class="tile">
+      <p class="label">Pipeline attempts</p>
+      <p class="value critical">4 / 4 failed</p>
+      <p class="sub">1 initial + 3 retries, identical error</p>
+    </div>
+    <div class="tile">
+      <p class="label">Publish recommendation</p>
+      <p class="value critical">BLOCK</p>
+      <p class="sub">Do not publish current data</p>
+    </div>
+  </div>
+
+  <section>
+    <h2>Business impact</h2>
+    <p>The executive orders/revenue dashboard scheduled to publish today did not receive a data refresh. The source dataset failed data-quality validation, and the pipeline that loads it (<code>orders_ingest_daily</code>) failed on its initial run and all 3 automatic retries, with 0 of 12 extracted rows reaching the <code>orders_fact</code> table. Publishing now would mean the dashboard shows stale or incomplete figures rather than a validated refresh.</p>
+    <p><strong>Financial impact:</strong> Not yet quantified — no dollar or revenue impact figure is available in the source reports.</p>
+  </section>
+
+  <section>
+    <h2>Data quality findings</h2>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>Check</th><th>Evidence</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Schema</td><td>All required columns present</td><td><span class="pill pass">PASS</span></td></tr>
+          <tr><td>Freshness</td><td>Order ORD-1009 loaded ~3 days ago, past the 24-hour limit</td><td><span class="pill fail">FAIL</span></td></tr>
+          <tr><td>Expected volume</td><td>12 rows present (minimum 10)</td><td><span class="pill pass">PASS</span></td></tr>
+          <tr><td>Key uniqueness</td><td>Order ID ORD-1004 appears twice with conflicting order dates</td><td><span class="pill fail">FAIL</span></td></tr>
+          <tr><td>Full-row duplicates</td><td>No two rows are fully identical</td><td><span class="pill pass">PASS</span></td></tr>
+          <tr><td>Required fields (region)</td><td>Order ORD-1005 has a blank region</td><td><span class="pill fail">FAIL</span></td></tr>
+          <tr><td>Other nulls</td><td>No unexpected blanks elsewhere</td><td><span class="pill pass">PASS</span></td></tr>
+          <tr><td>Numeric rules (revenue &gt; 0)</td><td>Order ORD-1007 has revenue of -49.99</td><td><span class="pill fail">FAIL</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Pipeline failure summary</h2>
+    <p>The pipeline failed on the same record (order ORD-1005, the same one flagged with a blank region above) on every one of 4 attempts, with an identical error each time — the signature of a deterministic data gap, not a temporary glitch. Retrying again without a fix is not expected to change the outcome.</p>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>Attempt</th><th>Outcome</th><th>Rows processed before failure</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1 (initial)</td><td><span class="pill fail">FAILED</span></td><td>4 / 12</td></tr>
+          <tr><td>2 (retry 1/3)</td><td><span class="pill fail">FAILED</span></td><td>4 / 12</td></tr>
+          <tr><td>3 (retry 2/3)</td><td><span class="pill fail">FAILED</span></td><td>4 / 12</td></tr>
+          <tr><td>4 (retry 3/3)</td><td><span class="pill fail">FAILED</span></td><td>4 / 12</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <details>
+      <summary>Technical evidence (log &amp; run metadata citations)</summary>
+      <ul class="facts">
+        <li>Most probable cause: the region-mapping step has no entry for a blank/missing region value — evidenced by an identical <code>KeyError</code> at <code>order_id=ORD-1005</code> across all 4 attempts (orders-pipeline-failure.log, lines 9, 18, 24, 30).</li>
+        <li>Run metadata states the <code>region_lookup</code> table "has no entry for null/empty region values and no configured default fallback."</li>
+        <li>Schema validation logged the mismatch as a warning (not an error) and let it proceed, which is why the row reached the mapper (log lines 5–7).</li>
+        <li>Not yet confirmed: whether non-standard region strings (West/East/South/North) would also fail to map — the pipeline never processed past this row in any attempt.</li>
+      </ul>
+    </details>
+  </section>
+
+  <div class="grid-2">
+    <section>
+      <h2>What we know</h2>
+      <ul class="facts">
+        <li>Data-quality check returned FAIL with 4 hard-rule violations.</li>
+        <li>Pipeline failed on 4/4 attempts, always at the same record.</li>
+        <li>0 of 12 rows were loaded to orders_fact.</li>
+        <li>The two independent checks (data quality + pipeline log) converge on the same blank-region record.</li>
+        <li>An alert was already sent to the data engineering on-call channel (severity HIGH).</li>
+      </ul>
+    </section>
+    <section>
+      <h2>What we do not know</h2>
+      <ul class="facts unknown">
+        <li>Whether other non-standard region values would also fail once this is fixed.</li>
+        <li>Whether letting this mismatch through as a warning was intentional or an oversight.</li>
+        <li>Financial or business impact of the delayed refresh.</li>
+        <li>Confirmed root cause pending direct inspection of the mapping table itself.</li>
+      </ul>
+    </section>
+  </div>
+
+  <section class="decision">
+    <h2>Decision needed</h2>
+    <p>Approve keeping the orders revenue dashboard <strong>blocked from publishing</strong> until (1) the data-quality violations are resolved at the source and the dataset re-validated, and (2) the pipeline's mapping-table gap is fixed and a subsequent run completes successfully. No publish exception on current data.</p>
+    <dl class="meta">
+      <dt>Owner</dt><dd>Not yet assigned</dd>
+      <dt>Next update</dt><dd>Not yet scheduled</dd>
+    </dl>
+  </section>
+
+  <footer>
+    Generated from: skill-lab/final-incident-package/data-quality-report.md, etl-triage-report.md, executive-dashboard-brief.md. Source data and pipeline were not modified.
+  </footer>
+
+</div>
+</body>
+</html>

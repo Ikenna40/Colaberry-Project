@@ -1,0 +1,34 @@
+2026-08-03 03:10:02 INFO  [orchestrator] Starting pipeline run: orders_ingest_daily (run_id=run-20260803-0300)
+2026-08-03 03:10:02 INFO  [extract] Reading source file: skill-lab/orders.csv
+2026-08-03 03:10:03 INFO  [extract] Extracted 12 rows from skill-lab/orders.csv
+2026-08-03 03:10:03 INFO  [schema_validate] Validating columns against orders_staging schema
+2026-08-03 03:10:03 WARN  [schema_validate] Column 'region' expected non-null string matching REGION_CODE enum; found 1 null value at order_id=ORD-1005 (row_index=5)
+2026-08-03 03:10:03 WARN  [schema_validate] Column 'region' contains values outside canonical REGION_CODE enum (expected e.g. 'NA-WEST'); found raw values ['West','East','South','North']. Proceeding — mapping step is expected to normalize these.
+2026-08-03 03:10:04 INFO  [schema_validate] Validation completed with 2 warnings, 0 errors. Proceeding to transform.
+2026-08-03 03:10:04 INFO  [transform.region_code_mapper] Starting region code mapping (source column: region -> target column: region_code)
+2026-08-03 03:10:04 ERROR [transform.region_code_mapper] KeyError: region value '' (empty/null) not found in region_lookup table. Failed at order_id=ORD-1005, row_index=5
+2026-08-03 03:10:04 ERROR [transform.region_code_mapper] Step failed after processing 4/12 rows. Aborting transform.
+2026-08-03 03:10:04 ERROR [orchestrator] Step 'transform.region_code_mapper' failed: KeyError on empty region value (order_id=ORD-1005)
+2026-08-03 03:10:04 INFO  [orchestrator] Retry policy: max_attempts=3, backoff=fixed_30s (attempt 1), exponential thereafter. Scheduling retry 1/3.
+2026-08-03 03:10:34 INFO  [orchestrator] Retry attempt 1/3 starting for run_id=run-20260803-0300
+2026-08-03 03:10:34 INFO  [extract] Reading source file: skill-lab/orders.csv
+2026-08-03 03:10:35 INFO  [extract] Extracted 12 rows from skill-lab/orders.csv
+2026-08-03 03:10:35 INFO  [schema_validate] Validation completed with 2 warnings, 0 errors. Proceeding to transform.
+2026-08-03 03:10:35 INFO  [transform.region_code_mapper] Starting region code mapping (source column: region -> target column: region_code)
+2026-08-03 03:10:35 ERROR [transform.region_code_mapper] KeyError: region value '' (empty/null) not found in region_lookup table. Failed at order_id=ORD-1005, row_index=5
+2026-08-03 03:10:35 ERROR [transform.region_code_mapper] Step failed after processing 4/12 rows. Aborting transform.
+2026-08-03 03:10:35 INFO  [orchestrator] Retry attempt 1/3 failed with identical error. Scheduling retry 2/3.
+2026-08-03 03:11:35 INFO  [orchestrator] Retry attempt 2/3 starting for run_id=run-20260803-0300
+2026-08-03 03:11:36 INFO  [extract] Extracted 12 rows from skill-lab/orders.csv
+2026-08-03 03:11:36 INFO  [schema_validate] Validation completed with 2 warnings, 0 errors. Proceeding to transform.
+2026-08-03 03:11:36 ERROR [transform.region_code_mapper] KeyError: region value '' (empty/null) not found in region_lookup table. Failed at order_id=ORD-1005, row_index=5
+2026-08-03 03:11:36 ERROR [transform.region_code_mapper] Step failed after processing 4/12 rows. Aborting transform.
+2026-08-03 03:11:36 INFO  [orchestrator] Retry attempt 2/3 failed with identical error. Scheduling retry 3/3.
+2026-08-03 03:13:36 INFO  [orchestrator] Retry attempt 3/3 starting for run_id=run-20260803-0300
+2026-08-03 03:13:37 INFO  [extract] Extracted 12 rows from skill-lab/orders.csv
+2026-08-03 03:13:37 INFO  [schema_validate] Validation completed with 2 warnings, 0 errors. Proceeding to transform.
+2026-08-03 03:13:37 ERROR [transform.region_code_mapper] KeyError: region value '' (empty/null) not found in region_lookup table. Failed at order_id=ORD-1005, row_index=5
+2026-08-03 03:13:37 ERROR [transform.region_code_mapper] Step failed after processing 4/12 rows. Aborting transform.
+2026-08-03 03:13:37 ERROR [orchestrator] Retry attempt 3/3 failed with identical error. Max retry attempts exhausted.
+2026-08-03 03:13:37 ERROR [orchestrator] Pipeline run run-20260803-0300 marked FAILED. Load step not reached. 0 rows loaded to orders_fact.
+2026-08-03 03:13:38 INFO  [orchestrator] Alert dispatched to #data-eng-oncall (severity=HIGH, pipeline=orders_ingest_daily, run_id=run-20260803-0300)

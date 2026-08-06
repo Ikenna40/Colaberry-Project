@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(git init)",
+      "Bash(ls -la 'c:\\\\Users\\\\nzeri\\\\Documents\\\\Colaberry-Project\\\\docs\\\\BusinessAnalysis_FieldGuide.html')",
+      "Bash(powershell -c '\\(Get-Item '\\\\''c:\\\\Users\\\\nzeri\\\\Documents\\\\Colaberry-Project\\\\docs\\\\BusinessAnalysis_FieldGuide.html'\\\\''\\).Length')",
+      "PowerShell(Start-Process \"c:\\\\Users\\\\nzeri\\\\Documents\\\\Colaberry-Project\\\\docs\\\\BusinessAnalysis_FieldGuide.html\")",
+      "Bash(node --test backend/src/services/add.test.js)"
+    ]
+  }
+}
