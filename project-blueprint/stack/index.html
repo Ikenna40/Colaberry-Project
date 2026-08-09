@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Client Health Signal Dashboard — Tech Stack Command Center</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-section="index">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="scroll-progress"></div>
+
+<header class="topnav">
+  <div class="topnav-inner">
+    <div class="brand"><span class="dot"></span> Client Health Signal Dashboard — Tech Stack</div>
+    <div class="search-wrap">
+      <input id="nav-search" class="search-input" type="text" placeholder="Search the whole stack…" aria-label="Search the whole stack">
+      <div id="nav-search-results" class="search-results"></div>
+    </div>
+    <div class="nav-actions">
+      <button id="theme-toggle" class="icon-btn" type="button">🌙 Dark</button>
+      <button id="print-btn" class="icon-btn" type="button">🖨 Print</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="cc-hero">
+    <h1>Client Health Signal Dashboard — Tech Stack</h1>
+    <p class="page-desc">One real, specific technology per component, rated for fit against this project's actual scale — browse it section by section, or search across all of it above. Pairs with <a href="../architecture.md">the architecture</a> this stack was built for.</p>
+    <div class="must-do-well">Biggest risk: two of the ten rows (the Learning Platform and Survey Tool integrations) are still guesses until someone confirms those systems actually expose a live API.</div>
+  </div>
+
+  <div class="tile-grid">
+    <a class="tile" href="01-summary.html">
+      <div class="tile-svg" id="illus-fitbar-mini"></div>
+      <h3>1. Summary</h3>
+      <p>The fit-rating key, what each rating actually means, and where this plan is most likely to break.</p>
+      <div class="tile-count" data-count="fitBreakdown"></div>
+    </a>
+    <a class="tile" href="02-recommendations.html">
+      <div class="tile-svg" id="illus-stackbands-mini"></div>
+      <h3>2. Recommendations</h3>
+      <p>Every technology, grouped into what you touch, write, store, depend on, and what the data flow needs.</p>
+      <div class="tile-count" data-count="recommendations"></div>
+    </a>
+    <a class="tile" href="03-prompts.html">
+      <div class="tile-svg" id="illus-prompts-mini"></div>
+      <h3>3. Learn-More Prompts</h3>
+      <p>Every copy-ready prompt collected in one table, ready to paste into a new conversation.</p>
+      <div class="tile-count" data-count="prompts"></div>
+    </a>
+    <a class="tile" href="04-learning-order.html">
+      <div class="tile-svg" id="illus-ladder-mini"></div>
+      <h3>4. Learning Order</h3>
+      <p>What to learn first, and why — ordered by risk and dependency, not alphabet.</p>
+      <div class="tile-count" data-count="learningSteps"></div>
+    </a>
+    <a class="tile" href="05-alternatives.html">
+      <div class="tile-svg" id="illus-fork-mini"></div>
+      <h3>5. Alternatives</h3>
+      <p>What else was considered for each row, and the specific reason it wasn't picked.</p>
+      <div class="tile-count" data-count="alternatives"></div>
+    </a>
+    <a class="tile" href="06-reversibility.html">
+      <div class="tile-svg" id="illus-lockin-mini"></div>
+      <h3>6. Reversibility</h3>
+      <p>How hard each decision is to undo later, from a one-line config change to a risky migration.</p>
+      <div class="tile-count" data-count="reversibility"></div>
+    </a>
+    <a class="tile" href="07-not-covered.html">
+      <div class="tile-svg" id="illus-notold-mini"></div>
+      <h3>7. Not Covered</h3>
+      <p>What this document deliberately does not tell you — schema, cost, auth, and open questions.</p>
+      <div class="tile-count" data-count="notTold"></div>
+    </a>
+    <a class="tile" href="08-appendix.html">
+      <div class="tile-svg" id="illus-topology-mini"></div>
+      <h3>8. Appendix</h3>
+      <p>What runs on Colaberry's own infrastructure versus somebody else's servers, and a glossary.</p>
+      <div class="tile-count" data-count="topology"></div>
+    </a>
+  </div>
+</main>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+
+<button id="agent-toggle" type="button">✦ Ask</button>
+<div id="agent-panel" role="dialog" aria-label="Ask the stack">
+  <div class="agent-head">
+    <strong>Ask the stack</strong>
+    <button id="agent-close" class="icon-btn" type="button" aria-label="Close">✕</button>
+  </div>
+  <div class="agent-modes">
+    <button id="agent-mode-search" class="agent-mode-btn active" type="button">Search — no key</button>
+    <button id="agent-mode-claude" class="agent-mode-btn" type="button">Claude — needs key</button>
+  </div>
+  <div id="agent-body" class="agent-body"></div>
+</div>
+
+<div id="fs-overlay" class="fs-overlay">
+  <div class="fs-toolbar">
+    <button id="fs-zoom-out" type="button">− Zoom</button>
+    <button id="fs-zoom-in" type="button">+ Zoom</button>
+    <button id="fs-reset" type="button">Reset</button>
+    <button id="fs-close" type="button">✕ Close</button>
+  </div>
+  <div id="fs-stage" class="fs-stage"></div>
+</div>
+
+<script src="assets/stack.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

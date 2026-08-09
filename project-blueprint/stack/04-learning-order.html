@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learning Order — Tech Stack — Client Health Signal Dashboard</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-section="learning-order">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="scroll-progress"></div>
+
+<header class="topnav">
+  <div class="topnav-inner">
+    <div class="brand"><span class="dot"></span> Client Health Signal Dashboard — Tech Stack</div>
+    <a class="home-link" href="index.html">⌂ Command Center</a>
+    <div class="search-wrap">
+      <input id="nav-search" class="search-input" type="text" placeholder="Search the whole stack…" aria-label="Search the whole stack">
+      <div id="nav-search-results" class="search-results"></div>
+    </div>
+    <div class="nav-actions">
+      <button id="theme-toggle" class="icon-btn" type="button">🌙 Dark</button>
+      <button id="print-btn" class="icon-btn" type="button">🖨 Print</button>
+    </div>
+  </div>
+</header>
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Command Center</a> / Learning Order</nav>
+
+<main id="main">
+  <h1>4. Learning Order</h1>
+  <p class="page-desc">What to learn first, in order — ranked by risk and dependency (what everything else needs, and which unknowns to resolve earliest), not by how easy each technology is.</p>
+
+  <div class="card">
+    <h2 style="margin-top:0">The ladder</h2>
+    <div class="diagram-block">
+      <button class="expand-btn" data-target="#illus-ladder">⤢ Expand</button>
+      <div class="diagram-surface" id="illus-ladder"></div>
+    </div>
+    <p class="diagram-caption">Each step builds on the last — the database shape informs the backend, the external integrations get settled before the AI layer, and the UI comes last because it has nothing to show until the API returns real data.</p>
+  </div>
+
+  <div id="learning-list"></div>
+
+  <nav class="page-nav">
+    <a href="03-prompts.html"><span class="dir">← Previous</span><br>3. Learn-More Prompts</a>
+    <a class="next" href="05-alternatives.html"><span class="dir">Next →</span><br>5. Alternatives</a>
+  </nav>
+</main>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+
+<button id="agent-toggle" type="button">✦ Ask</button>
+<div id="agent-panel" role="dialog" aria-label="Ask the stack">
+  <div class="agent-head">
+    <strong>Ask the stack</strong>
+    <button id="agent-close" class="icon-btn" type="button" aria-label="Close">✕</button>
+  </div>
+  <div class="agent-modes">
+    <button id="agent-mode-search" class="agent-mode-btn active" type="button">Search — no key</button>
+    <button id="agent-mode-claude" class="agent-mode-btn" type="button">Claude — needs key</button>
+  </div>
+  <div id="agent-body" class="agent-body"></div>
+</div>
+
+<div id="fs-overlay" class="fs-overlay">
+  <div class="fs-toolbar">
+    <button id="fs-zoom-out" type="button">− Zoom</button>
+    <button id="fs-zoom-in" type="button">+ Zoom</button>
+    <button id="fs-reset" type="button">Reset</button>
+    <button id="fs-close" type="button">✕ Close</button>
+  </div>
+  <div id="fs-stage" class="fs-stage"></div>
+</div>
+
+<script src="assets/stack.js"></script>
+<script>
+  function findRec(id) { return STACK.recommendations.filter(function (r) { return r.id === id; })[0]; }
+  var listEl = document.getElementById("learning-list");
+  var steps = STACK.learningOrder.slice().sort(function (a, b) { return a.rank - b.rank; });
+  listEl.innerHTML = steps.map(function (s) {
+    var rec = findRec(s.id);
+    var searchText = ("rank " + s.rank + " " + (rec ? rec.component + " " + rec.technology : s.id) + " " + s.reason).replace(/"/g, "&quot;");
+    return '<div class="card" id="learn-' + s.id + '" data-search-item data-search-text="' + searchText + '">'
+      + '<span class="badge fit-' + (rec ? rec.fit : "green") + '">#' + s.rank + '</span>'
+      + '<h3 style="margin:8px 0 2px">' + (rec ? rec.component : s.id) + '</h3>'
+      + '<p style="margin:0 0 6px;font-weight:600">' + (rec ? rec.technology : "") + '</p>'
+      + '<p style="margin:0;color:var(--muted);font-size:13px">' + s.reason + '</p>'
+      + '</div>';
+  }).join("");
+</script>
+<script src="assets/site.js"></script>
+</body>
+</html>

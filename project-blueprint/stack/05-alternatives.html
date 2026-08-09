@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alternatives — Tech Stack — Client Health Signal Dashboard</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-section="alternatives">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="scroll-progress"></div>
+
+<header class="topnav">
+  <div class="topnav-inner">
+    <div class="brand"><span class="dot"></span> Client Health Signal Dashboard — Tech Stack</div>
+    <a class="home-link" href="index.html">⌂ Command Center</a>
+    <div class="search-wrap">
+      <input id="nav-search" class="search-input" type="text" placeholder="Search the whole stack…" aria-label="Search the whole stack">
+      <div id="nav-search-results" class="search-results"></div>
+    </div>
+    <div class="nav-actions">
+      <button id="theme-toggle" class="icon-btn" type="button">🌙 Dark</button>
+      <button id="print-btn" class="icon-btn" type="button">🖨 Print</button>
+    </div>
+  </div>
+</header>
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Command Center</a> / Alternatives</nav>
+
+<main id="main">
+  <h1>5. Alternatives Considered</h1>
+  <p class="page-desc">One real alternative per row, and the specific reason it lost — not "it depends," a concrete tradeoff tied to this project's actual scale.</p>
+
+  <div class="card">
+    <div class="diagram-block">
+      <button class="expand-btn" data-target="#illus-fork">⤢ Expand</button>
+      <div class="diagram-surface" id="illus-fork"></div>
+    </div>
+  </div>
+
+  <div id="alt-list"></div>
+
+  <nav class="page-nav">
+    <a href="04-learning-order.html"><span class="dir">← Previous</span><br>4. Learning Order</a>
+    <a class="next" href="06-reversibility.html"><span class="dir">Next →</span><br>6. Reversibility</a>
+  </nav>
+</main>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+
+<button id="agent-toggle" type="button">✦ Ask</button>
+<div id="agent-panel" role="dialog" aria-label="Ask the stack">
+  <div class="agent-head">
+    <strong>Ask the stack</strong>
+    <button id="agent-close" class="icon-btn" type="button" aria-label="Close">✕</button>
+  </div>
+  <div class="agent-modes">
+    <button id="agent-mode-search" class="agent-mode-btn active" type="button">Search — no key</button>
+    <button id="agent-mode-claude" class="agent-mode-btn" type="button">Claude — needs key</button>
+  </div>
+  <div id="agent-body" class="agent-body"></div>
+</div>
+
+<div id="fs-overlay" class="fs-overlay">
+  <div class="fs-toolbar">
+    <button id="fs-zoom-out" type="button">− Zoom</button>
+    <button id="fs-zoom-in" type="button">+ Zoom</button>
+    <button id="fs-reset" type="button">Reset</button>
+    <button id="fs-close" type="button">✕ Close</button>
+  </div>
+  <div id="fs-stage" class="fs-stage"></div>
+</div>
+
+<script src="assets/stack.js"></script>
+<script>
+  function findRec(id) { return STACK.recommendations.filter(function (r) { return r.id === id; })[0]; }
+  var listEl = document.getElementById("alt-list");
+  listEl.innerHTML = STACK.alternatives.map(function (a) {
+    var rec = findRec(a.id);
+    var searchText = ((rec ? rec.component : a.id) + " " + a.alternative + " " + a.whyNot).replace(/"/g, "&quot;");
+    return '<div class="card" id="alt-' + a.id + '" data-search-item data-search-text="' + searchText + '">'
+      + '<span class="badge fit-' + (rec ? rec.fit : "green") + '">Chose: ' + (rec ? rec.technology : a.id) + '</span>'
+      + '<div class="fork-grid">'
+      + '<div class="fork-card"><h4>Considered instead</h4><p style="margin:0;font-weight:600">' + a.alternative + '</p></div>'
+      + '<div class="fork-card"><h4>Why not</h4><p style="margin:0;color:var(--muted);font-size:13px">' + a.whyNot + '</p></div>'
+      + '</div>'
+      + '</div>';
+  }).join("");
+</script>
+<script src="assets/site.js"></script>
+</body>
+</html>

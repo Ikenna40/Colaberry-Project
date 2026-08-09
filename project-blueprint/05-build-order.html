@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build Order — Client Health Signal Dashboard</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-section="build-order">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="scroll-progress"></div>
+
+<header class="topnav">
+  <div class="topnav-inner">
+    <div class="brand"><span class="dot"></span> Client Health Signal Dashboard</div>
+    <a class="home-link" href="index.html">⌂ Command Center</a>
+    <div class="search-wrap">
+      <input id="nav-search" class="search-input" type="text" placeholder="Search the whole blueprint…" aria-label="Search the whole blueprint">
+      <div id="nav-search-results" class="search-results"></div>
+    </div>
+    <div class="nav-actions">
+      <button id="theme-toggle" class="icon-btn" type="button">🌙 Dark</button>
+      <button id="print-btn" class="icon-btn" type="button">🖨 Print</button>
+    </div>
+  </div>
+</header>
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Command Center</a> / Build Order</nav>
+
+<main id="main">
+  <h1>5. Build Order</h1>
+  <p class="page-desc">The phases to build this in, and what each one proves before the next begins. ★ marks the make-or-break phase — the one that first proves the day-one requirement.</p>
+
+  <div class="card">
+    <h2 style="margin-top:0">Timeline</h2>
+    <div class="diagram-surface" id="illus-timeline"></div>
+    <p class="diagram-caption">Phase 2 is make-or-break: it's the first point the ranked, explained list actually exists — everything before it is plumbing, everything after it is refinement.</p>
+  </div>
+
+  <h2>Phases</h2>
+  <div id="phase-list"></div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Relative duration</h2>
+    <canvas id="phase-duration-chart" height="140"></canvas>
+    <p class="diagram-caption">Real durations from the phase plan above — not an invented metric.</p>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Gantt</h2>
+    <div class="diagram-block">
+      <button class="expand-btn" data-target="#gantt-surface">⤢ Expand</button>
+      <div class="diagram-surface" id="gantt-surface">
+        <div class="mermaid" data-diagram="gantt"></div>
+      </div>
+    </div>
+    <p class="diagram-caption">Same four phases laid out against a calendar, assuming a 2026-08-10 start.</p>
+  </div>
+
+  <nav class="page-nav">
+    <a href="04-data-flow.html"><span class="dir">← Previous</span><br>4. Data Flow</a>
+    <a class="next" href="06-assumptions.html"><span class="dir">Next →</span><br>6. Assumptions &amp; Gaps</a>
+  </nav>
+</main>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+
+<button id="agent-toggle" type="button">✦ Ask</button>
+<div id="agent-panel" role="dialog" aria-label="Ask the blueprint">
+  <div class="agent-head">
+    <strong>Ask the blueprint</strong>
+    <button id="agent-close" class="icon-btn" type="button" aria-label="Close">✕</button>
+  </div>
+  <div class="agent-modes">
+    <button id="agent-mode-search" class="agent-mode-btn active" type="button">Search — no key</button>
+    <button id="agent-mode-claude" class="agent-mode-btn" type="button">Claude — needs key</button>
+  </div>
+  <div id="agent-body" class="agent-body"></div>
+</div>
+
+<div id="fs-overlay" class="fs-overlay">
+  <div class="fs-toolbar">
+    <button id="fs-zoom-out" type="button">− Zoom</button>
+    <button id="fs-zoom-in" type="button">+ Zoom</button>
+    <button id="fs-reset" type="button">Reset</button>
+    <button id="fs-close" type="button">✕ Close</button>
+  </div>
+  <div id="fs-stage" class="fs-stage"></div>
+</div>
+
+<script src="assets/blueprint.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@9.4.3/dist/mermaid.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<script>
+  document.getElementById("phase-list").innerHTML = BLUEPRINT.phases.map(function (p, i) {
+    return '<div class="card" id="phase-' + p.id + '" data-search-item data-search-text="phase ' + p.name + ' ' + p.proves.replace(/"/g, "&quot;") + '">'
+      + '<span class="badge ' + (p.makeOrBreak ? "ai" : "backend") + '">' + (i + 1) + '. ' + p.name + (p.makeOrBreak ? " ★" : "") + '</span>'
+      + '<p style="margin:8px 0 0">' + p.proves + '</p>'
+      + '<p style="margin:6px 0 0;color:var(--muted);font-size:13px">Duration: ' + p.weeks + ' week' + (p.weeks > 1 ? "s" : "") + '</p>'
+      + '</div>';
+  }).join("");
+</script>
+<script src="assets/site.js"></script>
+</body>
+</html>

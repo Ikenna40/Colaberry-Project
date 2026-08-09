@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Appendix — Tech Stack — Client Health Signal Dashboard</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-section="appendix">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="scroll-progress"></div>
+
+<header class="topnav">
+  <div class="topnav-inner">
+    <div class="brand"><span class="dot"></span> Client Health Signal Dashboard — Tech Stack</div>
+    <a class="home-link" href="index.html">⌂ Command Center</a>
+    <div class="search-wrap">
+      <input id="nav-search" class="search-input" type="text" placeholder="Search the whole stack…" aria-label="Search the whole stack">
+      <div id="nav-search-results" class="search-results"></div>
+    </div>
+    <div class="nav-actions">
+      <button id="theme-toggle" class="icon-btn" type="button">🌙 Dark</button>
+      <button id="print-btn" class="icon-btn" type="button">🖨 Print</button>
+    </div>
+  </div>
+</header>
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Command Center</a> / Appendix</nav>
+
+<main id="main">
+  <h1>8. Appendix</h1>
+  <p class="page-desc">Where everything actually runs, plus a glossary of every jargon term used across this site.</p>
+
+  <div class="card">
+    <h2 style="margin-top:0">What runs where</h2>
+    <div class="diagram-block">
+      <button class="expand-btn" data-target="#illus-topology">⤢ Expand</button>
+      <div class="diagram-surface" id="illus-topology"></div>
+    </div>
+    <p class="diagram-caption">Four of the ten rows run on somebody else's servers — worth remembering that client engagement and satisfaction data leaves Colaberry's own infrastructure each night to reach Claude, and is pulled in from three different vendors.</p>
+  </div>
+
+  <div id="topology-list"></div>
+
+  <div class="card" data-search-item data-search-text="glossary jargon terms api sdk vps csv rate limiting llm model tiers ci cd idempotency">
+    <h2 style="margin-top:0">Glossary</h2>
+    <table>
+      <tr><th>Term</th><th>Plain-English meaning</th></tr>
+      <tr><td><strong>API</strong></td><td>A standard way for two systems to exchange data over the web.</td></tr>
+      <tr><td><strong>SDK</strong></td><td>A ready-made code library, so you don't build the plumbing to talk to a service yourself.</td></tr>
+      <tr><td><strong>VPS</strong></td><td>A rented server you have full control over, running Colaberry's own software.</td></tr>
+      <tr><td><strong>CSV export</strong></td><td>A spreadsheet-style data file, downloaded on a schedule instead of pulled live.</td></tr>
+      <tr><td><strong>Rate limiting</strong></td><td>A service capping how many requests you can make per minute before it blocks you.</td></tr>
+      <tr><td><strong>LLM</strong></td><td>An AI language model — the kind of model behind Claude — that reads and writes plain text.</td></tr>
+      <tr><td><strong>Model tiers</strong></td><td>Faster/cheaper vs. smarter/pricier versions of the same AI model family.</td></tr>
+      <tr><td><strong>CI/CD</strong></td><td>Automatically testing and shipping code changes, rather than doing it by hand every time.</td></tr>
+    </table>
+  </div>
+
+  <div class="card" data-search-item data-search-text="related documents architecture tech stack markdown">
+    <h2 style="margin-top:0">Related documents</h2>
+    <p style="margin:0"><a href="../architecture.md">../architecture.md</a> — the system design this stack was chosen for.</p>
+    <p style="margin:6px 0 0"><a href="../tech-stack.md">../tech-stack.md</a> — this same recommendation as a single portable Markdown file.</p>
+  </div>
+
+  <nav class="page-nav">
+    <a href="07-not-covered.html"><span class="dir">← Previous</span><br>7. Not Covered</a>
+    <a class="next" href="index.html"><span class="dir">Back to →</span><br>Command Center</a>
+  </nav>
+</main>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+
+<button id="agent-toggle" type="button">✦ Ask</button>
+<div id="agent-panel" role="dialog" aria-label="Ask the stack">
+  <div class="agent-head">
+    <strong>Ask the stack</strong>
+    <button id="agent-close" class="icon-btn" type="button" aria-label="Close">✕</button>
+  </div>
+  <div class="agent-modes">
+    <button id="agent-mode-search" class="agent-mode-btn active" type="button">Search — no key</button>
+    <button id="agent-mode-claude" class="agent-mode-btn" type="button">Claude — needs key</button>
+  </div>
+  <div id="agent-body" class="agent-body"></div>
+</div>
+
+<div id="fs-overlay" class="fs-overlay">
+  <div class="fs-toolbar">
+    <button id="fs-zoom-out" type="button">− Zoom</button>
+    <button id="fs-zoom-in" type="button">+ Zoom</button>
+    <button id="fs-reset" type="button">Reset</button>
+    <button id="fs-close" type="button">✕ Close</button>
+  </div>
+  <div id="fs-stage" class="fs-stage"></div>
+</div>
+
+<script src="assets/stack.js"></script>
+<script>
+  function findRec(id) { return STACK.recommendations.filter(function (r) { return r.id === id; })[0]; }
+  var listEl = document.getElementById("topology-list");
+  listEl.innerHTML = STACK.topology.map(function (t) {
+    var rec = findRec(t.id);
+    var label = t.location === "local" ? "Your infrastructure" : "Somebody else's servers";
+    var searchText = ((rec ? rec.component + " " + rec.technology : t.id) + " " + label + " " + t.note).replace(/"/g, "&quot;");
+    return '<div class="card" id="topo-' + t.id + '" data-search-item data-search-text="' + searchText + '">'
+      + '<span class="badge ' + (t.location === "local" ? "group-store" : "group-depend") + '">' + label + '</span>'
+      + '<h3 style="margin:8px 0 2px">' + (rec ? rec.component : t.id) + '</h3>'
+      + '<p style="margin:0 0 6px;font-weight:600">' + (rec ? rec.technology : "") + '</p>'
+      + '<p style="margin:0;color:var(--muted);font-size:13px">' + t.note + '</p>'
+      + '</div>';
+  }).join("");
+</script>
+<script src="assets/site.js"></script>
+</body>
+</html>

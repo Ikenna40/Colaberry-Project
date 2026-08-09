@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How It Fits Together — Client Health Signal Dashboard</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-section="architecture">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="scroll-progress"></div>
+
+<header class="topnav">
+  <div class="topnav-inner">
+    <div class="brand"><span class="dot"></span> Client Health Signal Dashboard</div>
+    <a class="home-link" href="index.html">⌂ Command Center</a>
+    <div class="search-wrap">
+      <input id="nav-search" class="search-input" type="text" placeholder="Search the whole blueprint…" aria-label="Search the whole blueprint">
+      <div id="nav-search-results" class="search-results"></div>
+    </div>
+    <div class="nav-actions">
+      <button id="theme-toggle" class="icon-btn" type="button">🌙 Dark</button>
+      <button id="print-btn" class="icon-btn" type="button">🖨 Print</button>
+    </div>
+  </div>
+</header>
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Command Center</a> / How It Fits Together</nav>
+
+<main id="main">
+  <h1>3. How It Fits Together</h1>
+  <p class="page-desc">The full system flowchart — every component from the previous page, and exactly what flows between them.</p>
+
+  <div class="card" data-search-item data-search-text="flowchart connections how it fits together">
+    <div class="diagram-block">
+      <button class="expand-btn" data-target="#flowchart-surface">⤢ Expand</button>
+      <div class="diagram-surface" id="flowchart-surface">
+        <div class="mermaid" data-diagram="flowchart"></div>
+      </div>
+    </div>
+    <p class="diagram-caption">Three outside systems feed a nightly job that writes to one database; the API pulls from that database, asks the AI layer (via Claude) for a risk summary per client, and serves the ranked result to the manager's dashboard.</p>
+  </div>
+
+  <nav class="page-nav">
+    <a href="02-components.html"><span class="dir">← Previous</span><br>2. Components</a>
+    <a class="next" href="04-data-flow.html"><span class="dir">Next →</span><br>4. Data Flow</a>
+  </nav>
+</main>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+
+<button id="agent-toggle" type="button">✦ Ask</button>
+<div id="agent-panel" role="dialog" aria-label="Ask the blueprint">
+  <div class="agent-head">
+    <strong>Ask the blueprint</strong>
+    <button id="agent-close" class="icon-btn" type="button" aria-label="Close">✕</button>
+  </div>
+  <div class="agent-modes">
+    <button id="agent-mode-search" class="agent-mode-btn active" type="button">Search — no key</button>
+    <button id="agent-mode-claude" class="agent-mode-btn" type="button">Claude — needs key</button>
+  </div>
+  <div id="agent-body" class="agent-body"></div>
+</div>
+
+<div id="fs-overlay" class="fs-overlay">
+  <div class="fs-toolbar">
+    <button id="fs-zoom-out" type="button">− Zoom</button>
+    <button id="fs-zoom-in" type="button">+ Zoom</button>
+    <button id="fs-reset" type="button">Reset</button>
+    <button id="fs-close" type="button">✕ Close</button>
+  </div>
+  <div id="fs-stage" class="fs-stage"></div>
+</div>
+
+<script src="assets/blueprint.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@9.4.3/dist/mermaid.min.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

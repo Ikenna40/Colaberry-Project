@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Summary — Tech Stack — Client Health Signal Dashboard</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-section="summary">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="scroll-progress"></div>
+
+<header class="topnav">
+  <div class="topnav-inner">
+    <div class="brand"><span class="dot"></span> Client Health Signal Dashboard — Tech Stack</div>
+    <a class="home-link" href="index.html">⌂ Command Center</a>
+    <div class="search-wrap">
+      <input id="nav-search" class="search-input" type="text" placeholder="Search the whole stack…" aria-label="Search the whole stack">
+      <div id="nav-search-results" class="search-results"></div>
+    </div>
+    <div class="nav-actions">
+      <button id="theme-toggle" class="icon-btn" type="button">🌙 Dark</button>
+      <button id="print-btn" class="icon-btn" type="button">🖨 Print</button>
+    </div>
+  </div>
+</header>
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Command Center</a> / Summary</nav>
+
+<main id="main">
+  <h1>1. Summary</h1>
+  <p class="page-desc">What each fit rating means, and the one paragraph naming where this stack is most likely to break.</p>
+
+  <div class="card" data-search-item data-search-text="fit rating key great fit good fit consider carefully green yellow red">
+    <h2 style="margin-top:0">The fit-rating key</h2>
+    <table>
+      <tr><th>Icon</th><th>Label</th><th>What it means</th></tr>
+      <tr><td style="font-size:20px">🟢</td><td><strong>great fit</strong></td><td>Matches this project's size and needs — pick it, move on.</td></tr>
+      <tr><td style="font-size:20px">🟡</td><td><strong>good fit</strong></td><td>Works, but there is a real caveat you should read first.</td></tr>
+      <tr><td style="font-size:20px">🔴</td><td><strong>consider carefully</strong></td><td>Where this plan is most likely to hurt you.</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Ratings at a glance</h2>
+    <div class="diagram-block">
+      <button class="expand-btn" data-target="#illus-fitbar">⤢ Expand</button>
+      <div class="diagram-surface" id="illus-fitbar"></div>
+    </div>
+    <p class="diagram-caption">10 recommendations, rated against this project's real scale (~30 clients, one nightly batch run) — not against what's generally popular.</p>
+  </div>
+
+  <div class="card" id="headline" data-search-item data-search-text="headline where this stack is most likely to break">
+    <h2 style="margin-top:0">Where this stack is most likely to break</h2>
+    <p id="headline-text" style="font-weight:600"></p>
+  </div>
+
+  <nav class="page-nav">
+    <a href="index.html"><span class="dir">← Back to</span><br>Command Center</a>
+    <a class="next" href="02-recommendations.html"><span class="dir">Next →</span><br>2. Recommendations</a>
+  </nav>
+</main>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+
+<button id="agent-toggle" type="button">✦ Ask</button>
+<div id="agent-panel" role="dialog" aria-label="Ask the stack">
+  <div class="agent-head">
+    <strong>Ask the stack</strong>
+    <button id="agent-close" class="icon-btn" type="button" aria-label="Close">✕</button>
+  </div>
+  <div class="agent-modes">
+    <button id="agent-mode-search" class="agent-mode-btn active" type="button">Search — no key</button>
+    <button id="agent-mode-claude" class="agent-mode-btn" type="button">Claude — needs key</button>
+  </div>
+  <div id="agent-body" class="agent-body"></div>
+</div>
+
+<div id="fs-overlay" class="fs-overlay">
+  <div class="fs-toolbar">
+    <button id="fs-zoom-out" type="button">− Zoom</button>
+    <button id="fs-zoom-in" type="button">+ Zoom</button>
+    <button id="fs-reset" type="button">Reset</button>
+    <button id="fs-close" type="button">✕ Close</button>
+  </div>
+  <div id="fs-stage" class="fs-stage"></div>
+</div>
+
+<script src="assets/stack.js"></script>
+<script>
+  document.getElementById("headline-text").textContent = STACK.headline;
+</script>
+<script src="assets/site.js"></script>
+</body>
+</html>

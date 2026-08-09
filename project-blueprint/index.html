@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Client Health Signal Dashboard — Blueprint Command Center</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-section="index">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="scroll-progress"></div>
+
+<header class="topnav">
+  <div class="topnav-inner">
+    <div class="brand"><span class="dot"></span> Client Health Signal Dashboard</div>
+    <div class="search-wrap">
+      <input id="nav-search" class="search-input" type="text" placeholder="Search the whole blueprint…" aria-label="Search the whole blueprint">
+      <div id="nav-search-results" class="search-results"></div>
+    </div>
+    <div class="nav-actions">
+      <button id="theme-toggle" class="icon-btn" type="button">🌙 Dark</button>
+      <button id="print-btn" class="icon-btn" type="button">🖨 Print</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="cc-hero">
+    <h1>Client Health Signal Dashboard</h1>
+    <p class="page-desc">Architecture blueprint for Colaberry's customer success team — browse it section by section, or search across all of it above.</p>
+    <div class="must-do-well">Must do well on day one: within a single login, correctly surface which of the ~30 active enterprise clients need a check-in this week, and why.</div>
+  </div>
+
+  <div class="tile-grid">
+    <a class="tile" href="01-summary.html">
+      <div class="tile-svg" id="illus-pipeline-mini"></div>
+      <h3>1. Summary</h3>
+      <p>The idea in one paragraph, and the one thing it must do well on day one.</p>
+      <div class="tile-count" data-count="idea"></div>
+    </a>
+    <a class="tile" href="02-components.html">
+      <div class="tile-svg" id="illus-layered-mini"></div>
+      <h3>2. Components</h3>
+      <p>Every component this idea actually needs, grouped into layers, each in plain English.</p>
+      <div class="tile-count" data-count="components"></div>
+    </a>
+    <a class="tile" href="03-architecture.html">
+      <div class="tile-svg" id="illus-graph-mini"></div>
+      <h3>3. How It Fits Together</h3>
+      <p>The full system flowchart — every component and every connection between them.</p>
+      <div class="tile-count" data-count="connections"></div>
+    </a>
+    <a class="tile" href="04-data-flow.html">
+      <div class="tile-svg" id="illus-ribbon-mini"></div>
+      <h3>4. Data Flow</h3>
+      <p>A numbered walkthrough of one full cycle, from nightly pull to morning login.</p>
+      <div class="tile-count" data-count="steps"></div>
+    </a>
+    <a class="tile" href="05-build-order.html">
+      <div class="tile-svg" id="illus-timeline-mini"></div>
+      <h3>5. Build Order</h3>
+      <p>The phases to build this in, and what each one proves before moving on.</p>
+      <div class="tile-count" data-count="phases"></div>
+    </a>
+    <a class="tile" href="06-assumptions.html">
+      <div class="tile-svg" id="illus-coverage-mini"></div>
+      <h3>6. Assumptions &amp; Gaps</h3>
+      <p>What this design assumes, what it deliberately leaves uncovered, and the one open question.</p>
+      <div class="tile-count" data-count="gaps"></div>
+    </a>
+  </div>
+</main>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+
+<button id="agent-toggle" type="button">✦ Ask</button>
+<div id="agent-panel" role="dialog" aria-label="Ask the blueprint">
+  <div class="agent-head">
+    <strong>Ask the blueprint</strong>
+    <button id="agent-close" class="icon-btn" type="button" aria-label="Close">✕</button>
+  </div>
+  <div class="agent-modes">
+    <button id="agent-mode-search" class="agent-mode-btn active" type="button">Search — no key</button>
+    <button id="agent-mode-claude" class="agent-mode-btn" type="button">Claude — needs key</button>
+  </div>
+  <div id="agent-body" class="agent-body"></div>
+</div>
+
+<div id="fs-overlay" class="fs-overlay">
+  <div class="fs-toolbar">
+    <button id="fs-zoom-out" type="button">− Zoom</button>
+    <button id="fs-zoom-in" type="button">+ Zoom</button>
+    <button id="fs-reset" type="button">Reset</button>
+    <button id="fs-close" type="button">✕ Close</button>
+  </div>
+  <div id="fs-stage" class="fs-stage"></div>
+</div>
+
+<script src="assets/blueprint.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

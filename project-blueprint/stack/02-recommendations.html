@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recommendations — Tech Stack — Client Health Signal Dashboard</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-section="recommendations">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="scroll-progress"></div>
+
+<header class="topnav">
+  <div class="topnav-inner">
+    <div class="brand"><span class="dot"></span> Client Health Signal Dashboard — Tech Stack</div>
+    <a class="home-link" href="index.html">⌂ Command Center</a>
+    <div class="search-wrap">
+      <input id="nav-search" class="search-input" type="text" placeholder="Search the whole stack…" aria-label="Search the whole stack">
+      <div id="nav-search-results" class="search-results"></div>
+    </div>
+    <div class="nav-actions">
+      <button id="theme-toggle" class="icon-btn" type="button">🌙 Dark</button>
+      <button id="print-btn" class="icon-btn" type="button">🖨 Print</button>
+    </div>
+  </div>
+</header>
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Command Center</a> / Recommendations</nav>
+
+<main id="main">
+  <h1>2. Recommendations</h1>
+  <p class="page-desc">One real, specific technology per component from the architecture, grouped by what kind of thing it is. The last group — things the data flow needs — wasn't named in the original component list; it's added because the data flow can't work without it.</p>
+
+  <div class="card">
+    <h2 style="margin-top:0">The whole stack, coloured by fit</h2>
+    <div class="diagram-block">
+      <button class="expand-btn" data-target="#illus-stackbands">⤢ Expand</button>
+      <div class="diagram-surface" id="illus-stackbands"></div>
+    </div>
+    <p class="diagram-caption">Green = great fit, amber = good fit with a caveat, red = consider carefully. Same colour every time a technology appears anywhere in this site.</p>
+  </div>
+
+  <div id="rec-groups"></div>
+
+  <nav class="page-nav">
+    <a href="01-summary.html"><span class="dir">← Previous</span><br>1. Summary</a>
+    <a class="next" href="03-prompts.html"><span class="dir">Next →</span><br>3. Learn-More Prompts</a>
+  </nav>
+</main>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+
+<button id="agent-toggle" type="button">✦ Ask</button>
+<div id="agent-panel" role="dialog" aria-label="Ask the stack">
+  <div class="agent-head">
+    <strong>Ask the stack</strong>
+    <button id="agent-close" class="icon-btn" type="button" aria-label="Close">✕</button>
+  </div>
+  <div class="agent-modes">
+    <button id="agent-mode-search" class="agent-mode-btn active" type="button">Search — no key</button>
+    <button id="agent-mode-claude" class="agent-mode-btn" type="button">Claude — needs key</button>
+  </div>
+  <div id="agent-body" class="agent-body"></div>
+</div>
+
+<div id="fs-overlay" class="fs-overlay">
+  <div class="fs-toolbar">
+    <button id="fs-zoom-out" type="button">− Zoom</button>
+    <button id="fs-zoom-in" type="button">+ Zoom</button>
+    <button id="fs-reset" type="button">Reset</button>
+    <button id="fs-close" type="button">✕ Close</button>
+  </div>
+  <div id="fs-stage" class="fs-stage"></div>
+</div>
+
+<script src="assets/stack.js"></script>
+<script>
+  function fitMeta(fit) { return STACK.ratingLegend.filter(function (l) { return l.key === fit; })[0]; }
+
+  var container = document.getElementById("rec-groups");
+  var html = "";
+  STACK.groupOrder.forEach(function (group) {
+    var recs = STACK.recommendations.filter(function (r) { return r.group === group.key; });
+    if (!recs.length) return;
+    html += '<h2>' + group.icon + ' ' + group.label + '</h2>';
+    recs.forEach(function (r) {
+      var fm = fitMeta(r.fit);
+      var searchText = (r.component + " " + r.technology + " " + r.why + " " + r.caveat).replace(/"/g, "&quot;");
+      html += '<div class="card" id="rec-' + r.id + '" data-search-item data-search-text="' + searchText + '">'
+        + '<div>'
+        + '<span class="badge group-' + r.group + '">' + r.categoryIcon + ' ' + group.label + '</span> '
+        + '<span class="badge fit-' + r.fit + '">' + fm.icon + ' ' + fm.label + '</span>'
+        + '</div>'
+        + '<h3 style="margin:8px 0 2px">' + r.component + '</h3>'
+        + '<p style="margin:0 0 6px;font-weight:600">' + r.technology + '</p>'
+        + '<p style="margin:0 0 6px">' + r.why + '</p>'
+        + (r.caveat ? '<p style="margin:0;color:var(--muted);font-size:13px">⚠ ' + r.caveat + '</p>' : '')
+        + (r.fromFlow ? '<p style="margin:6px 0 0;color:var(--accent);font-size:12px;font-weight:700">↳ Added because the data flow needs it — not named in the original component list.</p>' : '')
+        + '</div>';
+    });
+  });
+  container.innerHTML = html;
+</script>
+<script src="assets/site.js"></script>
+</body>
+</html>

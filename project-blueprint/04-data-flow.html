@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Flow — Client Health Signal Dashboard</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-section="data-flow">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="scroll-progress"></div>
+
+<header class="topnav">
+  <div class="topnav-inner">
+    <div class="brand"><span class="dot"></span> Client Health Signal Dashboard</div>
+    <a class="home-link" href="index.html">⌂ Command Center</a>
+    <div class="search-wrap">
+      <input id="nav-search" class="search-input" type="text" placeholder="Search the whole blueprint…" aria-label="Search the whole blueprint">
+      <div id="nav-search-results" class="search-results"></div>
+    </div>
+    <div class="nav-actions">
+      <button id="theme-toggle" class="icon-btn" type="button">🌙 Dark</button>
+      <button id="print-btn" class="icon-btn" type="button">🖨 Print</button>
+    </div>
+  </div>
+</header>
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Command Center</a> / Data Flow</nav>
+
+<main id="main">
+  <h1>4. Data Flow</h1>
+  <p class="page-desc">One full cycle, start to finish — from the 2am pull to the manager's morning login.</p>
+
+  <div class="card">
+    <h2 style="margin-top:0">Steps, colored by whether the AI layer touches them</h2>
+    <div class="diagram-surface" id="illus-ribbon"></div>
+    <p class="diagram-caption">Only steps 5 and 6 involve the AI layer — everything else is plain data movement and storage.</p>
+  </div>
+
+  <h2>Numbered walkthrough</h2>
+  <div id="step-list"></div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Sequence diagram</h2>
+    <div class="diagram-block">
+      <button class="expand-btn" data-target="#sequence-surface">⤢ Expand</button>
+      <div class="diagram-surface" id="sequence-surface">
+        <div class="mermaid" data-diagram="sequence"></div>
+      </div>
+    </div>
+    <p class="diagram-caption">The same walkthrough as a message-by-message timeline between every participant.</p>
+  </div>
+
+  <nav class="page-nav">
+    <a href="03-architecture.html"><span class="dir">← Previous</span><br>3. How It Fits Together</a>
+    <a class="next" href="05-build-order.html"><span class="dir">Next →</span><br>5. Build Order</a>
+  </nav>
+</main>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+
+<button id="agent-toggle" type="button">✦ Ask</button>
+<div id="agent-panel" role="dialog" aria-label="Ask the blueprint">
+  <div class="agent-head">
+    <strong>Ask the blueprint</strong>
+    <button id="agent-close" class="icon-btn" type="button" aria-label="Close">✕</button>
+  </div>
+  <div class="agent-modes">
+    <button id="agent-mode-search" class="agent-mode-btn active" type="button">Search — no key</button>
+    <button id="agent-mode-claude" class="agent-mode-btn" type="button">Claude — needs key</button>
+  </div>
+  <div id="agent-body" class="agent-body"></div>
+</div>
+
+<div id="fs-overlay" class="fs-overlay">
+  <div class="fs-toolbar">
+    <button id="fs-zoom-out" type="button">− Zoom</button>
+    <button id="fs-zoom-in" type="button">+ Zoom</button>
+    <button id="fs-reset" type="button">Reset</button>
+    <button id="fs-close" type="button">✕ Close</button>
+  </div>
+  <div id="fs-stage" class="fs-stage"></div>
+</div>
+
+<script src="assets/blueprint.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@9.4.3/dist/mermaid.min.js"></script>
+<script>
+  document.getElementById("step-list").innerHTML = BLUEPRINT.dataFlowSteps.map(function (s) {
+    return '<div class="card" id="step-' + s.n + '" data-search-item data-search-text="step ' + s.n + ' ' + s.text.replace(/"/g, "&quot;") + '">'
+      + (s.aiTouch ? '<span class="badge ai">AI step</span>' : '')
+      + '<h3 style="margin:8px 0 4px">Step ' + s.n + '</h3>'
+      + '<p style="margin:0">' + s.text + '</p>'
+      + '</div>';
+  }).join("");
+</script>
+<script src="assets/site.js"></script>
+</body>
+</html>
