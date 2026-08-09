@@ -1,7 +1,16 @@
 {
   "permissions": {
     "allow": [
-      "Edit(/.claude/skills/executive-dashboard-brief/**)"
+      "Edit(/.claude/skills/executive-dashboard-brief/**)",
+      "Bash(node -e ' *)",
+      "Bash(node \"/c/Users/nzeri/AppData/Local/Temp/claude/c--Users-nzeri-Documents-Colaberry-Project/03563b91-c5c5-46aa-8d3a-abe9ef945e27/scratchpad/checktags.js\")",
+      "Bash(node \"/c/Users/nzeri/AppData/Local/Temp/claude/c--Users-nzeri-Documents-Colaberry-Project/03563b91-c5c5-46aa-8d3a-abe9ef945e27/scratchpad/finddiv.js\")",
+      "Bash(node --check /tmp/extracted.js)",
+      "Bash(node --check __TRACKED_VAR__/extracted.js)",
+      "Bash(node --check \"C:/Users/nzeri/AppData/Local/Temp/claude/c--Users-nzeri-Documents-Colaberry-Project/03563b91-c5c5-46aa-8d3a-abe9ef945e27/scratchpad/extracted.js\")",
+      "Bash(node \"C:/Users/nzeri/AppData/Local/Temp/claude/c--Users-nzeri-Documents-Colaberry-Project/03563b91-c5c5-46aa-8d3a-abe9ef945e27/scratchpad/checkids.js\")",
+      "Bash(node \"C:/Users/nzeri/AppData/Local/Temp/claude/c--Users-nzeri-Documents-Colaberry-Project/03563b91-c5c5-46aa-8d3a-abe9ef945e27/scratchpad/checkjsids.js\")",
+      "Bash(start \"\" \"C:\\\\Users\\\\nzeri\\\\Documents\\\\Colaberry-Project\\\\SolutionArchitecture_FieldGuide.html\")"
     ]
   }
 }
