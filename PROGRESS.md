@@ -27,3 +27,17 @@
   - What changed: Added `backend/src/services/add.js` (plain JS + JSDoc types, returns the sum of two numbers) and `backend/src/services/add.test.js` (4 tests: happy path, negative numbers, zero, floating-point, via Node's built-in `node:test`/`node:assert` — no new dependencies). Requested explicitly by the user as a demonstration of the explore→plan→code→commit workflow.
   - Verification: `node --test backend/src/services/add.test.js` — 4/4 pass, 0 fail.
   - Notes: Deviation from `backend/CLAUDE.md`'s "TypeScript is mandatory" contract rule, logged as required — no `package.json`/TypeScript toolchain exists yet in this repo (deliberately deferred pending separate dependency-approval), so plain JS with JSDoc annotations was used instead. Once the TS toolchain is approved and scaffolded, this should be converted. No failure-path or idempotency test written: `add` is a pure, side-effect-free function with no I/O, so neither applies — noted rather than forcing artificial tests. This is also the repository's first real git commit (verified via `git status` that no prior commits existed); the commit for this change is scoped to exactly these two files plus this PROGRESS.md entry, not the rest of the repo's already-staged foundation work.
+
+- [x] Add progress-log and session-changelog skills plus HTML changelog generator
+  - Date: 2026-08-09
+  - Session: CC-20260817-b4jk
+  - What changed: Added `.claude/skills/progress-log/SKILL.md` (procedure for appending PROGRESS.md entries per CLAUDE.md's hard gate), `.claude/skills/session-changelog/SKILL.md` + `template.html` (branded per-session HTML changelog generator per CLAUDE.md's "Per-session change report" rule), and `scripts/generateSessionChangelog.js` (deterministic script that parses PROGRESS.md entries tagged with a given Session ID and renders `docs/sessions/SESSION_<id>.html`). Includes the generated output `docs/sessions/SESSION_CC-20260802-m3xv.html` from running the script against that prior session's entries.
+  - Verification: `node scripts/generateSessionChangelog.js CC-20260802-m3xv` ran successfully and produced `docs/sessions/SESSION_CC-20260802-m3xv.html` (present in working tree).
+  - Notes: Catch-up entry per CLAUDE.md's Catch-up rule. Filesystem timestamps show these files were created 2026-08-09 but left uncommitted with no PROGRESS.md entry until this session found them during a "commit all uncommitted changes" request. Logged late per "better to log late than not at all."
+
+- [x] Record accumulated Claude Code tool permissions in `.claude/settings.json`
+  - Date: 2026-08-17
+  - Session: CC-20260817-b4jk
+  - What changed: Appended `allow` entries to `.claude/settings.json` for tool calls exercised in recent sessions (Edit/mkdir permissions for the two new skill directories, running the changelog generator, `gh auth`/`gh api`, `winget install --id GitHub.cli`) plus two `additionalDirectories` entries (`.claude/skills`, the user's `Downloads` folder) needed for those file operations. No business logic changed.
+  - Verification: `git diff .claude/settings.json` shows an additive-only change (18 insertions, 1 deletion for the trailing bracket); harness read and applied the file without error throughout the session.
+  - Notes: Harness-recorded permission bookkeeping rather than authored implementation, but logged per CLAUDE.md's "infra/config that affects runtime" scope for PROGRESS.md.

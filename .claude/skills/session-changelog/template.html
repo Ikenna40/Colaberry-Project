@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Session __SESSION_ID__ — Change Report</title>
+<style>
+  :root{
+    --accent:#2d6cdf; --text:#1a1a1a; --muted:#6b6b6b; --border:#e2e2e2; --surface:#ffffff; --bg:#f6f7f9;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif; line-height:1.5;}
+  header.page{padding:28px 32px; background:var(--surface); border-bottom:1px solid var(--border);}
+  header.page h1{margin:0 0 4px; font-size:1.4rem;}
+  header.page .meta{color:var(--muted); font-size:.85rem; font-family:Consolas,monospace;}
+  main{max-width:840px; margin:0 auto; padding:28px 20px 60px; display:grid; gap:16px;}
+  .card{background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:20px 22px; box-shadow:0 1px 2px rgba(0,0,0,.04);}
+  .card > header{display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:10px;}
+  .card h2{margin:0; font-size:1.05rem; color:var(--accent);}
+  .card .date{font-size:.78rem; color:var(--muted); font-family:Consolas,monospace; white-space:nowrap;}
+  .field{margin-bottom:10px;}
+  .field:last-child{margin-bottom:0;}
+  .field .label{display:block; font-size:.68rem; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); margin-bottom:3px; font-family:Consolas,monospace;}
+  .field p{margin:0; font-size:.9rem;}
+  code{background:rgba(0,0,0,.06); padding:.1em .35em; border-radius:4px; font-size:.85em;}
+  .empty{color:var(--muted); text-align:center; padding:40px;}
+</style>
+</head>
+<body>
+<header class="page">
+  <h1>Session Change Report</h1>
+  <div class="meta">Session __SESSION_ID__ &middot; __ENTRY_SUMMARY__ &middot; generated __GENERATED_AT__</div>
+</header>
+<main>
+__CARDS__
+</main>
+</body>
+</html>

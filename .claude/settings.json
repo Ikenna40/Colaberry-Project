@@ -10,7 +10,24 @@
       "Bash(node --check \"C:/Users/nzeri/AppData/Local/Temp/claude/c--Users-nzeri-Documents-Colaberry-Project/03563b91-c5c5-46aa-8d3a-abe9ef945e27/scratchpad/extracted.js\")",
       "Bash(node \"C:/Users/nzeri/AppData/Local/Temp/claude/c--Users-nzeri-Documents-Colaberry-Project/03563b91-c5c5-46aa-8d3a-abe9ef945e27/scratchpad/checkids.js\")",
       "Bash(node \"C:/Users/nzeri/AppData/Local/Temp/claude/c--Users-nzeri-Documents-Colaberry-Project/03563b91-c5c5-46aa-8d3a-abe9ef945e27/scratchpad/checkjsids.js\")",
-      "Bash(start \"\" \"C:\\\\Users\\\\nzeri\\\\Documents\\\\Colaberry-Project\\\\SolutionArchitecture_FieldGuide.html\")"
+      "Bash(start \"\" \"C:\\\\Users\\\\nzeri\\\\Documents\\\\Colaberry-Project\\\\SolutionArchitecture_FieldGuide.html\")",
+      "Bash(mkdir -p \"/c/Users/nzeri/Documents/Colaberry-Project/.claude/skills/progress-log\" && ls \"/c/Users/nzeri/Documents/Colaberry-Project/.claude/skills/\")",
+      "Edit(/.claude/skills/progress-log/**)",
+      "Bash(mkdir -p \"/c/Users/nzeri/Documents/Colaberry-Project/.claude/skills/session-changelog\")",
+      "Edit(/.claude/skills/session-changelog/**)",
+      "Bash(node scripts/generateSessionChangelog.js CC-20260802-m3xv)",
+      "Bash(grep -c '^```' \"/c/Users/nzeri/Downloads/skill-template.md\")",
+      "Bash(gh auth *)",
+      "Bash(gh api *)",
+      "PowerShell(gh auth status 2>&1)",
+      "PowerShell(gh api user 2>&1)",
+      "PowerShell(winget install --id GitHub.cli -e --accept-source-agreements --accept-package-agreements)",
+      "Skill(progress-log)",
+      "Skill(progress-log:*)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\nzeri\\Documents\\Colaberry-Project\\.claude\\skills",
+      "c:\\Users\\nzeri\\Downloads"
     ]
   }
 }

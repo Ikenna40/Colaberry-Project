@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Session CC-20260802-m3xv — Change Report</title>
+<style>
+  :root{
+    --accent:#2d6cdf; --text:#1a1a1a; --muted:#6b6b6b; --border:#e2e2e2; --surface:#ffffff; --bg:#f6f7f9;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif; line-height:1.5;}
+  header.page{padding:28px 32px; background:var(--surface); border-bottom:1px solid var(--border);}
+  header.page h1{margin:0 0 4px; font-size:1.4rem;}
+  header.page .meta{color:var(--muted); font-size:.85rem; font-family:Consolas,monospace;}
+  main{max-width:840px; margin:0 auto; padding:28px 20px 60px; display:grid; gap:16px;}
+  .card{background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:20px 22px; box-shadow:0 1px 2px rgba(0,0,0,.04);}
+  .card > header{display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:10px;}
+  .card h2{margin:0; font-size:1.05rem; color:var(--accent);}
+  .card .date{font-size:.78rem; color:var(--muted); font-family:Consolas,monospace; white-space:nowrap;}
+  .field{margin-bottom:10px;}
+  .field:last-child{margin-bottom:0;}
+  .field .label{display:block; font-size:.68rem; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); margin-bottom:3px; font-family:Consolas,monospace;}
+  .field p{margin:0; font-size:.9rem;}
+  code{background:rgba(0,0,0,.06); padding:.1em .35em; border-radius:4px; font-size:.85em;}
+  .empty{color:var(--muted); text-align:center; padding:40px;}
+</style>
+</head>
+<body>
+<header class="page">
+  <h1>Session Change Report</h1>
+  <div class="meta">Session CC-20260802-m3xv &middot; 2 entries &middot; generated 2026-08-09T22:05:11.057Z</div>
+</header>
+<main>
+<article class="card">
+  <header>
+    <h2>Author Business Analyst Field Guide deep-dive (docs/BusinessAnalysis_FieldGuide.html)</h2>
+    <span class="date">2026-08-02</span>
+  </header>
+  <div class="field"><span class="label">What changed</span><p>Created a single self-contained HTML knowledge-base artifact at <code>docs/BusinessAnalysis_FieldGuide.html</code> for the Colaberry Enterprise AI Leadership Accelerator curriculum. Offline full-text search and an offline &quot;Ask&quot; Q&amp;A assistant (25-entry FAQ, keyword-matched, no external API). Nine full BA documents for a fictional Insurance initiative (Meridian Mutual Insurance / &quot;ClaimSight AI&quot; claims-triage program): Executive Summary, Vision &amp; Business Case, BRD (15 FRs + 10 NFRs), User Stories (15, MoSCoW-tagged, Given/When/Then), Use Cases (5, with alternate/exception flows), Personas (5, goals/frustrations), Stakeholder Matrix (10 stakeholders), Current/Future-State Process, and an RTM (zero orphan requirements). Each document has on-page branded cover, doc-control strip, sign-off block, per-document HTML download and print-to-PDF; the three tabular docs also export CSV. All diagrams/charts (process flows, sequence diagram, ERD, line/bar/donut charts, stakeholder quadrant) are inline SVG. Official Colaberry logo fetched from <code>https://enterprise.colaberry.ai/colaberry-logo-transparent.png</code> and embedded as base64 (10 places: header + 9 doc covers). Metadata script tag (<code>id=&quot;deepdive-metadata&quot;</code>) embedded per spec. Opened in the default browser on completion.</p></div>
+  <div class="field"><span class="label">Verification</span><p>Fetched logo hashed/compared byte-for-byte against all 10 embedded copies (exact match, corrected one transcription error found during verification). <code>grep</code> confirms 9 <code>doc-section</code> elements and the metadata tag present. File size 373KB. <code>Start-Process</code> opened the file with no error.</p></div>
+<div class="field"><span class="label">Notes</span><p>Learner curriculum artifact, not Colaberry product code — filed under <code>docs/</code> per that folder's &quot;in-repo documentation&quot; responsibility, logged here because CLAUDE.md's Logging section explicitly includes &quot;in-repo docs&quot; in what belongs in PROGRESS.md. Session ID changed to <code>CC-20260802-m3xv</code> this entry onward: the background-task notification earlier in this conversation confirmed the prior Claude Code process had exited and restarted, which by CLAUDE.md's own session-start protocol means a fresh Session ID should have been minted — done now, late but logged per the Catch-up rule.</p></div>
+</article>
+<article class="card">
+  <header>
+    <h2>Add <code>add(a, b)</code> example function with unit tests (backend/src/services/add.js)</h2>
+    <span class="date">2026-08-02</span>
+  </header>
+  <div class="field"><span class="label">What changed</span><p>Added <code>backend/src/services/add.js</code> (plain JS + JSDoc types, returns the sum of two numbers) and <code>backend/src/services/add.test.js</code> (4 tests: happy path, negative numbers, zero, floating-point, via Node's built-in <code>node:test</code>/<code>node:assert</code> — no new dependencies). Requested explicitly by the user as a demonstration of the explore→plan→code→commit workflow.</p></div>
+  <div class="field"><span class="label">Verification</span><p><code>node --test backend/src/services/add.test.js</code> — 4/4 pass, 0 fail.</p></div>
+<div class="field"><span class="label">Notes</span><p>Deviation from <code>backend/CLAUDE.md</code>'s &quot;TypeScript is mandatory&quot; contract rule, logged as required — no <code>package.json</code>/TypeScript toolchain exists yet in this repo (deliberately deferred pending separate dependency-approval), so plain JS with JSDoc annotations was used instead. Once the TS toolchain is approved and scaffolded, this should be converted. No failure-path or idempotency test written: <code>add</code> is a pure, side-effect-free function with no I/O, so neither applies — noted rather than forcing artificial tests. This is also the repository's first real git commit (verified via <code>git status</code> that no prior commits existed); the commit for this change is scoped to exactly these two files plus this PROGRESS.md entry, not the rest of the repo's already-staged foundation work.</p></div>
+</article>
+</main>
+</body>
+</html>
