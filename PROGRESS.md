@@ -41,3 +41,10 @@
   - What changed: Appended `allow` entries to `.claude/settings.json` for tool calls exercised in recent sessions (Edit/mkdir permissions for the two new skill directories, running the changelog generator, `gh auth`/`gh api`, `winget install --id GitHub.cli`) plus two `additionalDirectories` entries (`.claude/skills`, the user's `Downloads` folder) needed for those file operations. No business logic changed.
   - Verification: `git diff .claude/settings.json` shows an additive-only change (18 insertions, 1 deletion for the trailing bracket); harness read and applied the file without error throughout the session.
   - Notes: Harness-recorded permission bookkeeping rather than authored implementation, but logged per CLAUDE.md's "infra/config that affects runtime" scope for PROGRESS.md.
+
+- [x] Generate this session's HTML changelog and record its permission entries
+  - Date: 2026-08-17
+  - Session: CC-20260817-b4jk
+  - What changed: Ran `node scripts/generateSessionChangelog.js CC-20260817-b4jk`, producing `docs/sessions/SESSION_CC-20260817-b4jk.html`. Harness auto-recorded the resulting `Skill(session-changelog)` and `Skill(session-changelog:*)` permission entries into `.claude/settings.json`.
+  - Verification: Script printed "Wrote 2 entries for CC-20260817-b4jk to docs\sessions\SESSION_CC-20260817-b4jk.html"; `git diff .claude/settings.json` confirms an additive-only 2-line change.
+  - Notes: Same harness-bookkeeping pattern as the prior entry — logged per CLAUDE.md's PROGRESS.md scope, not a manual implementation decision.
